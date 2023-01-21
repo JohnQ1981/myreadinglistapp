@@ -2,6 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import BookCreate from "./components/BookCreate";
 import BookList from "./components/BookList";
+import axios from 'axios';
 
 function App() {
   const editBookById =(id, newTitle)=>{
@@ -21,12 +22,17 @@ function App() {
     setBooks(updateBooks);
   };
 
-  var id = Math.round(Math.random() * 1000);
+  //var id = Math.round(Math.random() * 1000);
 
   const [books, setBooks] = useState([]);
-  const createBook = (title) => {
+  const createBook = async (title) => {
+    const response =await axios.post('http://localhost:3003/books',{
+      title,
+    });
+    //console.log(response);
     //console.log("Need to add book with: ", title);
-    const updatedBooks = [...books, { id: id, title: title }];
+    //const updatedBooks = [...books, { id: id, title: title }];
+    const updatedBooks = [...books, response.data,];
     setBooks(updatedBooks);
   };
 

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - Newfeature
     paths:
       - "myreadinglistappjq/**"
 
@@ -19,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm install --legacy-peer-deps --force
       - run: npm run build
-      - run: npm run server
+      #- run: npm run server
         env:
           PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
 

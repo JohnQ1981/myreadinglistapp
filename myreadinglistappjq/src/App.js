@@ -1,16 +1,27 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BookCreate from "./components/BookCreate";
 import BookList from "./components/BookList";
-import axios from 'axios';
+import axios from "axios";
 
 function App() {
-  const editBookById =(id, newTitle)=>{
-    const updatedBooks = books.map((book)=>{
-      if(book.id ===id){
-        return{...book, title:newTitle };
-        }
-        return book;
+  const [books, setBooks] = useState([]);
+
+  const fetchBooks =async ()=>{
+    const allBooks = await axios.get('http://localhost:3003/books');
+    setBooks(allBooks.data);
+  }
+
+  useEffect(()=>{
+    fetchBooks();
+  }, []);
+
+  const editBookById = (id, newTitle) => {
+    const updatedBooks = books.map((book) => {
+      if (book.id === id) {
+        return { ...book, title: newTitle };
+      }
+      return book;
     });
     setBooks(updatedBooks);
   };
@@ -21,18 +32,12 @@ function App() {
     });
     setBooks(updateBooks);
   };
-
-  //var id = Math.round(Math.random() * 1000);
-
-  const [books, setBooks] = useState([]);
+  
   const createBook = async (title) => {
-    const response =await axios.post('http://localhost:3003/books',{
+    const response = await axios.post("http://localhost:3003/books", {
       title,
     });
-    //console.log(response);
-    //console.log("Need to add book with: ", title);
-    //const updatedBooks = [...books, { id: id, title: title }];
-    const updatedBooks = [...books, response.data,];
+    const updatedBooks = [...books, response.data];
     setBooks(updatedBooks);
   };
 

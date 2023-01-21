@@ -2,7 +2,7 @@
 
 # dependencies
 /myreadinglistappjq/node_modules
-/mytwitchapp/node_modules
+/jsonserver/node_modules
 /node_modules
 /.pnp
 .pnp.js
